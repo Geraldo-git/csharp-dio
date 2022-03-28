@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DIO.Bank.Enum;
+using System;
 
 namespace DIO.Bank
 {
@@ -7,10 +8,10 @@ namespace DIO.Bank
         static void Main(string[] args)
         {
 
-            Conta conta1;
+            Conta cp1 = new Conta(TipoConta.PessoaFisica, "Maria", 0, 0);
 
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(cp1.ToString());
         }
     }
 }

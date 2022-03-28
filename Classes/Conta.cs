@@ -20,6 +20,48 @@ namespace DIO.Bank
             Saldo = saldo;
             Credito = credito;
         }
+
+        public void Sacar(double valor)
+        {
+
+            if (valor < Saldo)
+            {
+                Saldo -= valor;
+            }
+            else
+            {
+                Console.WriteLine("Saldo insuficiente !");
+            }
+        }
+
+        public void Transferir(double valor, Conta contaDestino)
+        {
+
+            if (valor < Saldo)
+            {
+                Saldo -= valor;
+                contaDestino.Depositar(valor);
+            }
+            else
+            {
+                Console.WriteLine("Saldo insuficiente !");
+            }
+        }
+
+        public void Depositar(double valor)
+        {
+            Saldo += valor;
+        }
+
+        public override string ToString()
+        {
+            return "Dados " +
+                "\nNome: " + Nome +
+                "\nSaldo: " + Saldo +
+                "\nCredito: " + Credito;
+
+        }
+
     }
 
 
