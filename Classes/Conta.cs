@@ -8,58 +8,60 @@ namespace DIO.Bank
 {
     public class Conta
     {
+
         private TipoConta TipoConta { get; set; }
-        private string Nome { get; set; }
         private double Saldo { get; set; }
         private double Credito { get; set; }
+        private string Nome { get; set; }
 
-        public Conta(TipoConta tipoConta, string nome, double saldo, double credito)
+
+        public Conta(TipoConta tipoConta, double saldo, double credito, string nome)
         {
-            TipoConta = tipoConta;
-            Nome = nome;
-            Saldo = saldo;
-            Credito = credito;
+            this.TipoConta = tipoConta;
+            this.Saldo = saldo;
+            this.Credito = credito;
+            this.Nome = nome;
         }
 
-        public void Sacar(double valor)
+        public bool Sacar(double valorSaque)
         {
 
-            if (valor < Saldo)
+            if (this.Saldo - valorSaque < (this.Credito * -1))
             {
-                Saldo -= valor;
+                Console.WriteLine("Saldo insuficiente!");
+                return false;
             }
-            else
-            {
-                Console.WriteLine("Saldo insuficiente !");
-            }
+            this.Saldo -= valorSaque;
+
+            Console.WriteLine("Saldo atual da conta de {0} é {1}", this.Nome, this.Saldo);
+
+
+            return true;
         }
 
-        public void Transferir(double valor, Conta contaDestino)
+        public void Depositar(double valorDeposito)
         {
+            this.Saldo += valorDeposito;
 
-            if (valor < Saldo)
-            {
-                Saldo -= valor;
-                contaDestino.Depositar(valor);
-            }
-            else
-            {
-                Console.WriteLine("Saldo insuficiente !");
-            }
+            Console.WriteLine("Saldo atual da conta de {0} é {1}", this.Nome, this.Saldo);
         }
 
-        public void Depositar(double valor)
+        public void Transferir(double valorTransferencia, Conta contaDestino)
         {
-            Saldo += valor;
+            if (this.Sacar(valorTransferencia))
+            {
+                contaDestino.Depositar(valorTransferencia);
+            }
         }
 
         public override string ToString()
         {
-            return "Dados " +
-                "\nNome: " + Nome +
-                "\nSaldo: " + Saldo +
-                "\nCredito: " + Credito;
-
+            string retorno = "";
+            retorno += "TipoConta " + this.TipoConta + " | ";
+            retorno += "Nome " + this.Nome + " | ";
+            retorno += "Saldo " + this.Saldo + " | ";
+            retorno += "Crédito " + this.Credito;
+            return retorno;
         }
 
     }
